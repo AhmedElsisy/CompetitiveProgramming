@@ -1,6 +1,6 @@
 /*
 it's obvious that
-we need to make a complete graph with n edges(so that every two vertices(day) have a common edge(hobbit)).
+we need to make a complete graph with n edges(so that every two vertices(days) have a common edge(hobbit)).
 so we search for m (number of vertices)
 s.t. (m * (m - 1) / 2) <= n , we use binary search to find that number
 */
