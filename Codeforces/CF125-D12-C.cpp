@@ -1,6 +1,6 @@
 /*
 it's obvious that
-we need to make a complete graph with n edges(so that every two vertices(days) have a common edge(hobbit)).
+we need to make a complete graph with maximum n edges(so that every two vertices(days) have a common edge(hobbit)).
 so we search for m (number of vertices)
 s.t. (m * (m - 1) / 2) <= n , we use binary search to find that number
 */
@@ -35,7 +35,6 @@ int main() {
     }
 
     int cur = 1;
-    cout << ans << '\n';
     for(int i = 0 ; i < ans ; ++i){
         for(int j = i + 1 ; j < ans ; ++j){
             res[i].pb(cur);
@@ -43,7 +42,8 @@ int main() {
             ++cur;
         }
     }
-
+    
+    cout << ans << '\n';
     for(int i = 0 ; i < ans ; ++i){
         for(int x : res[i])
             cout << x << ' ';
