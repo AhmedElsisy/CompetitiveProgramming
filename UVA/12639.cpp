@@ -3,7 +3,7 @@ we need to check there is a solution at least
 so using brute force(backtracing) we have to check all possible combinations of the shape
 if there is a solution in one of them then output "yes"
 otherwise output "no"
-total complexity O(7! * 6 * 6)
+total complexity : O(7! * 6 * 6)
 */
 #include <bits/stdc++.h>
 #define pb push_back
