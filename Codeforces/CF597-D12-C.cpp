@@ -7,7 +7,7 @@
     we start from 2 to k + 1 , so c[i] in this iteration will be SUM of (1 to c[i] - 1 values of (k - 1) iteration)
     then update c[i] for next iteration
     so the final answer SUM for each i , c[i]
-    recursize formula : c(a[j][k]) = S(for each i from 1 to a[i] - 1 , c(a[j][k - 1])) 
+    recursive formula : c(a[j][k]) = S(for each i from 1 to a[i] - 1 , c(a[j][k - 1])) 
 */
 #include <bits/stdc++.h>
 #define pb push_back
