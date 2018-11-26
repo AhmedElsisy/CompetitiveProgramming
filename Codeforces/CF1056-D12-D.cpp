@@ -1,5 +1,5 @@
 /*
-    let h[x] be number of subtrees has x leafs
+    let h[x] be number of subtrees have x leafs
     we can calulate h[] using simple dfs
     and using prefix sum on h[]
     we can calculate minimum different colors 
