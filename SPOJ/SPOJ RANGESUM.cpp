@@ -1,6 +1,6 @@
 /*
     shift the indexes of the original array 1e5 (maximum number of insertion operations)
-    and insert first number in 1e5 - 1 , 1e5 - 2 , ... , 0
+    and insert (query number 2)first number in 1e5 - 1 , 1e5 - 2 , ... , 0
     and track the beginning of the array after insertions
     let beg be the index of the beginning of the array
     to answer query you should convert l , r to your shifting indexes
