@@ -1,3 +1,12 @@
+
+/*
+    sieve and for each prime p you iterate over its multiples
+    then between every two adjacent multiples you have to choose what cost
+    you will pay to make every element between that two adjacent multiples multiple to prime p
+    let cnt[i] be the count of numbers from 1 to i in the array
+    let sum[i] be the sum of numbers 1 to i in the array
+*/
+
 #include <bits/stdc++.h>
 #define pb push_back
 #define all(v) (v).begin() , (v).end()
@@ -9,14 +18,6 @@
 
 using namespace std;
 typedef long long  ll;
-
-/*
-    sieve and for each prime p you iterate over its multiples
-    then between every two adjacent multiples you have to choose what cost
-    you will pay to make every element between that two adjacent multiples multiple to prime p
-    let cnt[i] be the count of numbers from 1 to i in the array
-    let sum[i] be the sum of numbers 1 to i in the array
-*/
 
 const int N = 1e7 + 44;
 
