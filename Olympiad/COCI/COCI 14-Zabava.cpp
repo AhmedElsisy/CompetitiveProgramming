@@ -1,6 +1,6 @@
 /*
     using dynamic programming we can solve this problem with this recurrence
-    dp(i , k) = min( for each m <= k , dp(i + 1 , k - m)
+    dp(i , k) = min( for each m <= k , dp(i + 1 , k - m) )
     total complexity : O(m * k * k)
 */
 
