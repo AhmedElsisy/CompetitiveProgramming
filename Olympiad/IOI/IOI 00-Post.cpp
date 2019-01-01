@@ -1,3 +1,10 @@
+/*
+    let be cost(i , j) the total distance if we placed two post offices in {i , j}
+    let be dp(i , j) be the minimum distance to place j post offices from [1 : i]
+    dp(i , j) = for each m = 0 to i - 1 MIN(dp(m , j - 1) + cost(m , i))
+    we pre-processed cost(i , j) to reduce total complexity
+*/
+
 #include <iostream>
 #include <cstring>
 #define pb push_back
@@ -9,8 +16,7 @@
 using namespace std;
 typedef long long  ll;
 const int N = 304;
-int n , k , a[304] , dp[N][34];
-int cost[N][N];
+int n , k , a[N] , dp[N][34] , cost[N][N];
 
 int d(int i , int j){
     return abs(a[i] - a[j]);
