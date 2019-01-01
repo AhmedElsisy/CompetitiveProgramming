@@ -2,6 +2,7 @@ const int N = 1e5 + 4 , LG = log2(N) + 1;
 int gcd[N][LG];
 int n , getlg[N];
 vector<int> a;
+// take care of long long
 
 void pre(){
     for(int i = 1 ; i < N ; ++i)
@@ -22,7 +23,7 @@ void build(){
 
 }
 
-int getGCD(int l , int r){
+int getGCD(int l , int r){          // query in log(N) s.t. N = max(gcd[l][lg] , gcd[l + dif][lg])
     int sz = r - l + 1 , lg = getlg[sz] , dif = sz - (1 << lg);
     return __gcd(gcd[l][lg] , gcd[l + dif][lg]);
 }
