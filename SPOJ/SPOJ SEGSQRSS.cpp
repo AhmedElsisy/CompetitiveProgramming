@@ -1,6 +1,6 @@
 /*
     the main idea is how to add x into segment you store only the sum of square for the elements
-    so (a + x)^2 = a^2 + 2ax + x^2 = a^2 + x(2a + x) - (you can derive the used formula from this observation)
+    so (a + x)^2 = a^2 + 2ax + x^2 = a^2 + x(2a + x) , you can derive the used formula from this observation
     the rest of the problem is how to store lazy propagation value and this simple to track it
 */
 
