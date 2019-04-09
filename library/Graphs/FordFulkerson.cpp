@@ -1,11 +1,11 @@
-const int N = 104;
+const int N = 104;  // edit number of nodes here
 struct Edge{
     int u , v , c;
 };
 
-vector<int> adj[N] , par , to;
+vector<int> adj[N];
 vector<Edge> edgeList;
-int n , m , src , snk;
+int n , src , snk;
 
 void init(){            // to be called every TESTCASE
     for(int i = 0 ; i < N ; ++i)
@@ -50,3 +50,4 @@ int FordFulkerson(){
     return mf;
 }
 
+// you need to initialize three variable -> (src , snk , n)

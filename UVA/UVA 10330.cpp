@@ -1,4 +1,15 @@
-const int N = 104;  // edit number of nodes here
+#include <bits/stdc++.h>
+#define pb push_back
+#define all(v) (v).begin() , (v).end()
+#define popcnt(x) __builtin_popcount(x)
+#define inf 0x3f3f3f3f
+#define watch(x) cout << (#x) << " is " << (x) << endl
+#define rand() (rand() << 15 | rand())
+
+using namespace std;
+typedef long long  ll;
+typedef long double  ld;
+const int N = 200 + 5;
 struct Edge{
     int u , v , c;
 };
@@ -59,4 +70,48 @@ int EdmondKarp(){
     return mf;
 }
 
-// you need to initialize three variable -> (src , snk , n)
+int main(){
+#ifndef ONLINE_JUDGE
+    freopen("input.txt" , "r" , stdin);
+#endif
+    int reg;
+    while(cin >> reg){
+        init();
+        vector<int> cap(reg + 1) , in(reg + 1) , out(reg + 1);
+        for(int i = 1 ; i <= reg ; ++i)
+            cin >> cap[i];
+
+        for(int i = 1 ; i <= reg ; ++i){
+            in[i] = 2 * i - 1;
+            out[i] = 2 * i;
+            add_biedge(in[i] , out[i] , cap[i]);
+        }
+
+        n = 2 * reg + 2;
+        src = 0 , snk = 2 * reg + 1;
+
+        int m;
+        cin >> m;
+        for(int i = 0 ; i < m ; ++i){
+            int u , v , c;
+            cin >> u >> v >> c;
+            add_biedge(out[u] , in[v] , c);
+        }
+
+        int B , D;
+        cin >> B >> D;
+        for(int i = 0 ; i < B ; ++i){
+            int x;
+            cin >> x;
+            add_biedge(src , in[x] , inf);
+        }
+
+        for(int i = 0 ; i < D ; ++i){
+            int x;
+            cin >> x;
+            add_biedge(out[x] , snk , inf);
+        }
+
+        cout << EdmondKarp() << "\n";
+    }
+}
