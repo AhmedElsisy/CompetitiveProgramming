@@ -1,7 +1,9 @@
 const int N = 1e5 + 4;
 
 int p[N] , sz[N];
-vector<pair<pair<int , int> , int> > elist;
+
+vector<pair<pair<int , int> , int> > elist; // {{u , v} , cost}
+// take care of long long
 
 void init(){
     iota(p , p + N , 0); // 0 1 2 3
@@ -23,14 +25,15 @@ void join(int u , int v){
     sz[v] += sz[u];
 }
 
-// long long
+// take care of long long
 int mst(){
     int ret = 0;
-    sort(all(elist) , [](pair<pair<int , int> , int> a , pair<pair<int ,int> , int> b){
+    sort(elist.begin() , elist.end() , [](pair<pair<int , int> , int> a , pair<pair<int ,int> , int> b){
             return a.second < b.second;
     });
     for(int i = 0 ; i < (int)elist.size() ; ++i){
-        int u = elist[i].first.first , v = elist[i].first.second , cost = elist[i].second;
+        int u = elist[i].first.first , v = elist[i].first.second;
+        int cost = elist[i].second;
         if(f(u) == f(v))continue;
 
         join(u , v);
@@ -38,4 +41,3 @@ int mst(){
     }
     return ret;
 }
-// init every testcase
