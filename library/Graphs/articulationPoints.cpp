@@ -3,7 +3,7 @@ int dfs_num[N] , dfs_low[N] , timer = 0 , n , m;
 bool vis[N] , artPoints[N];
 vector<int> adj[N];
 // get articulation points in undirected graph
-void dfs(int u , int p){
+void dfs(int u , int p = -1){
     dfs_num[u] = dfs_low[u] = timer++;
     vis[u] = true;
     int cnt = 0;

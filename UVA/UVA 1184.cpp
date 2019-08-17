@@ -1,3 +1,12 @@
+#include<bits/stdc++.h>
+#define pb push_back
+#define all(v) (v).begin() , (v).end()
+#define popcnt(x) __builtin_popcount(x)
+#define inf 0x3f3f3f3f
+#define watch(x) cout << (#x) << " is " << (x) << endl
+#define rand() (rand() << 15 | rand())
+using namespace std;
+typedef long long  ll;
 const int N = 124;  // edit number of nodes here
 struct Edge{
     int u , v , c;
@@ -59,5 +68,36 @@ int EdmondKarp(){
     return mf;
 }
 
-// you need to initialize three variable -> (src , snk , max_node)
-// call biedge(u , v , cost)
+// you need to initialize three variable -> (src , snk , n)
+
+int in[N] , out[N];
+
+int main(){
+#ifndef ONLINE_JUDGE
+    freopen("input.txt" , "r" , stdin);
+#endif
+    ios::sync_with_stdio(0) , cin.tie(0) , cout.tie(0);
+    int t;
+    cin >> t;
+    while(t--){
+        int n , m;
+        cin >> n >> m;
+        src = 1;
+        snk = 2 * n + 2;
+        max_node = snk + 1;
+        init();
+        for(int i = 1 ; i <= n ; ++i){
+            in[i] = 2 * i;
+            out[i] = 2 * i + 1;
+        }
+        for(int i = 0 ; i < m ; ++i){
+            int u , v;
+            cin >> u >> v;
+            add_biedge(in[u] , out[v] , 1);
+        }
+        for(int i = 1 ; i <= n ; ++i)
+            add_biedge(src , in[i] , 1) , add_biedge(out[i] , snk , 1);
+
+        cout << n - EdmondKarp() << "\n";
+    }
+}
