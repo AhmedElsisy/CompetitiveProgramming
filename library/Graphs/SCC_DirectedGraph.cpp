@@ -24,7 +24,7 @@ void SCC(int u){                                // Strongly connected components
             int t = st.top();
             st.pop();
             inStack[t] = 0;
-            cmp[t] = comp.size() - 1;
+            cmp[t] = (int)comp.size() - 1;
             comp.back().push_back(t);
             if(t == u)break;
         }
