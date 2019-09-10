@@ -7,12 +7,6 @@ vector<int> adj[N] , par , to;
 vector<Edge> edgeList;
 int max_node , src , snk;
 
-void init(){        // FOR EVERY TESTCASE you should call init()
-    for(int i = 0 ; i <= max_node ; ++i)
-        adj[i].clear();
-    edgeList.clear();
-}
-
 void add_edge(int u , int v , int c){
     adj[u].push_back((int)edgeList.size());
     edgeList.push_back({u , v , c});
@@ -59,5 +53,10 @@ int EdmondKarp(){
     return mf;
 }
 
+void init(){        // FOR EVERY TESTCASE you should call init()
+   for(int i = 0 ; i <= max_node ; ++i)
+      adj[i].clear();
+   edgeList.clear();
+}
 // you need to initialize three variable -> (src , snk , max_node)
 // call biedge(u , v , cost)

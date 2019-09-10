@@ -28,9 +28,9 @@ int nCr(int n , int r){
 void pre(){
     fact[0] = invfact[0] = 1;
     for(int i = 1 ; i < N ; ++i)
-        fact[i] = mul(i , fact[i - 1] , MOD);
+        fact[i] = mul(i % MOD , fact[i - 1] , MOD);
 
     invfact[N - 1] = powMOD(fact[N - 1] , MOD - 2 , MOD);
     for(int i = N - 2; ~i ; --i)
-        invfact[i] = mul(invfact[i + 1] , i + 1 , MOD);
+        invfact[i] = mul(invfact[i + 1] , (i + 1) % MOD , MOD);
 }
