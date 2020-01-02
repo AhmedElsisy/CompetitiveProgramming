@@ -1,11 +1,11 @@
 const int N = 2e7 + 5 , MOD = 1e9 + 7;
 int fact[N] , invfact[N];
 
-int mul(int a , int b , int m){
+int mul(int a , int b , int m = MOD){
     return (1LL * (a % m) * (b % m)) % m;
 }
 
-int add(int a , int b , int m){
+int add(int a , int b , int m = MOD){
     return (1LL * (a % m) + (b % m)) % m;
 }
 
