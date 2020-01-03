@@ -1,3 +1,19 @@
+/**
+ *      Link: https://www.hackerrank.com/challenges/a-circle-and-a-square/problem
+ *      - circle is trivial but the problem with the square
+ *       side length of the square can be found easily by pythagorean theorem between x1,y1 & x2,y2
+ *       the sub problem is to find the vertices of the square and using function inSide() we can check
+ *       for every point (x,y) whether it lies on the square or not.
+ *
+ *      - point is inside a square if the sum areas of triangulation of square points with this point is equal to area of the square
+ *      - let D is the distance between p1 , p2 I think we can get an extra point of the square if we get the middle point (distance D / 2)
+ *      between the vector p1 -> p2 and move perpendicularly with the same distance D / 2
+ *
+ *      - case of fail assuming that square vertices will be at integer cordinate
+ *          30 20
+            14 6 4
+            24 4 11 6
+ */
 #include<bits/stdc++.h>
 #include <ext/pb_ds/assoc_container.hpp>
 #include <ext/pb_ds/tree_policy.hpp>
@@ -15,20 +31,11 @@ using ordered_set =
 tree<T, null_type, less<T>, rb_tree_tag, tree_order_statistics_node_update>;
 
 typedef long long  ll;
-/**
- * 10 <= h , w <= 100
- * -100 <= x , y <= 200
- * 0 <= r <= 100
- *
- * circle is trivial but the problem with the square
- * side length of the square can be found easily by pythagorean theorem between x1,y1 & x2,y2
- * point is inside a square if the sum areas of triangulation of square points with this point is equal to area of the square
- */
+
 #define EPS 1e-9
 #define PI acos(-1.0)
 
 double DEG_to_RAD(double d) { return d * PI / 180.0; }
-
 double RAD_to_DEG(double r) { return r * 180.0 / PI; }
 
 struct point { double x, y;   // only used if more precision is needed
@@ -43,83 +50,17 @@ struct vec { double x, y;  // name: `vec' is different from STL vector
 vec toVec(point a, point b) {       // convert 2 points to vector a->b
    return vec(b.x - a.x, b.y - a.y); }
 
+vec scale(vec v, double s) {        // nonnegative s = [<1 .. 1 .. >1]
+   return vec(v.x * s, v.y * s); }               // shorter.same.longer
+
+point translate(point p, vec v) {        // translate p according to v
+   return point(p.x + v.x , p.y + v.y); }
+
 double dist(point p1, point p2) {                // Euclidean distance
    return hypot(p1.x - p2.x, p1.y - p2.y); }           // return double
 
-double dot(vec a, vec b) { return (a.x * b.x + a.y * b.y); }
-
-double norm_sq(vec v) { return v.x * v.x + v.y * v.y; }
-
-double angle(point a, point o, point b) {  // returns angle aob in rad
-   vec oa = toVec(o, a), ob = toVec(o, b);
-   return acos(dot(oa, ob) / sqrt(norm_sq(oa) * norm_sq(ob))); }
-
 double cross(vec a, vec b) { return a.x * b.y - a.y * b.x; }
 
-// note: to accept collinear points, we have to change the `> 0'
-// returns true if point r is on the left side of line pq
-bool ccw(point p, point q, point r) {
-   return cross(toVec(p, q), toVec(p, r)) > 0; }
-
-// returns true if point r is on the same line as the line pq
-bool collinear(point p, point q, point r) {
-   return fabs(cross(toVec(p, q), toVec(p, r))) < EPS; }
-
-// returns true if we always make the same turn while examining
-// all the edges of the polygon one by one
-
-bool inPolygon(point pt, const vector<point> &P) {
-   if ((int) P.size() == 0) return false;
-   double sum = 0;    // assume the first vertex is equal to the last vertex
-   for (int i = 0; i < (int) P.size() - 1; i++) {
-      if (ccw(pt, P[i], P[i + 1]))
-         sum += angle(P[i], pt, P[i + 1]);                   // left turn/ccw
-      else sum -= angle(P[i], pt, P[i + 1]);
-   }                 // right turn/cw
-   return fabs(fabs(sum) - 2 * PI) < EPS;
-}
-point pivot;
-bool angleCmp(point a, point b) {                 // angle-sorting function
-   if (collinear(pivot, a, b))                               // special case
-      return dist(pivot, a) < dist(pivot, b);    // check which one is closer
-   double d1x = a.x - pivot.x, d1y = a.y - pivot.y;
-   double d2x = b.x - pivot.x, d2y = b.y - pivot.y;
-   return (atan2(d1y, d1x) - atan2(d2y, d2x)) < 0; }   // compare two angles
-
-vector<point> CH(vector<point> P) {   // the content of P may be reshuffled
-   int i, j, n = (int) P.size();
-   if (n <= 3) {
-      if (!(P[0] == P[n - 1])) P.push_back(P[0]); // safeguard from corner case
-      return P;                           // special case, the CH is P itself
-   }
-
-   // first, find P0 = point with lowest Y and if tie: rightmost X
-   int P0 = 0;
-   for (i = 1; i < n; i++)
-      if (P[i].y < P[P0].y || (P[i].y == P[P0].y && P[i].x > P[P0].x))
-         P0 = i;
-
-   point temp = P[0];
-   P[0] = P[P0];
-   P[P0] = temp;    // swap P[P0] with P[0]
-
-   // second, sort points by angle w.r.t. pivot P0
-   pivot = P[0];                    // use this global variable as reference
-   sort(++P.begin(), P.end(), angleCmp);              // we do not sort P[0]
-
-   // third, the ccw tests
-   vector<point> S;
-   S.push_back(P[n - 1]);
-   S.push_back(P[0]);
-   S.push_back(P[1]);   // initial S
-   i = 2;                                         // then, we check the rest
-   while (i < n) {           // note: N must be >= 3 for this method to work
-      j = (int) S.size() - 1;
-      if (ccw(S[j - 1], S[j], P[i])) S.push_back(P[i++]);  // left turn, accept
-      else S.pop_back();
-   }   // or pop the top of S until we have a left turn
-   return S;
-}// return the result
 point p1 , p2 , circleCenter;
 int h , w , r;
 const int N = 304;
@@ -149,30 +90,21 @@ void fillSquare(){
    double d = dist(p1 , p2);
    d *= d;
    double sideLen = sqrt(d / 2);
-   vector<point> squarePoints , tmp;
-   for(int i = -1000 ; i < 1001 ; ++i){
-      for(int j = -1000 ; j < 1001 ; ++j){
-         point cur(i , j);
-         double d1 = dist(cur , p1) , d2 = dist(cur , p2);
-         if(fabs(d1 - d2) < EPS && fabs(d1 - sideLen) < EPS){
-            tmp.pb(cur);
-         }
-      }
-   }
-   /*
-     case of fail RTE (i think because the sqrt function so we have to calc distance squared)
-     after AC save(library) boolean inrectangle function (point , vector<point>)
-      30 20
-      14 6 4
-      24 4 11 6
-    */
-//   watch(sideLen);
-//   watch(tmp.size());
-//   return;
+   vector<point> squarePoints;
+   // here we're finding the other points of the square using vector scaling and transforming
+   vec p12 = toVec(p1 , p2);
+   p12 = scale(p12 , 0.5);
+   point p = translate(p1 , p12);
+   swap(p12.x , p12.y);
+   p12.x *= -1;
+   point p3 = translate(p , p12);
    squarePoints.pb(p1);
-   squarePoints.pb(tmp[0]);
+   squarePoints.pb(p3);
    squarePoints.pb(p2);
-   squarePoints.pb(tmp[1]);
+   p12 = scale(p12 , -2);
+   p3 = translate(p3 , p12);
+   squarePoints.pb(p3);
+   // we got all square point
    for(int i = 0 ; i < h ; ++i){
       for(int j = 0 ; j < w ; ++j){
          point cur(i , j);
